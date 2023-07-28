@@ -1,23 +1,36 @@
 <?php
-
-require_once "class/Qcm.php";
-require_once "class/Question.php";
 require_once "class/Answer.php";
+require_once "class/Question.php";
+require_once "class/Qcm.php";
+require_once "config/connexion.php";
 
-$qcm = new Qcm();
+$qcm = new Qcm($pdo);
 
-$question1 = new Question('POO signifie :');
+function pretyDump($data)
+{
+    highlight_string("<?php\n\$data =\n" . var_export($data, true) . ";\n?>");
+}
 
-$question1->addAnswer(new Answer('Php Orienté Objet'));
-$question1->addAnswer(new Answer('ProgrammatiOn Orientée Outil'));
-$question1->addAnswer(new Answer('Programmation Orientée Objet', true));
-$question1->addAnswer(new Answer('Papillon Onirique Ostentatoire'));
+?>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM POO</title>
+</head>
 
+<body>
 
-// $question1->setExplications('Sans commentaires si vous avez eu faux :-°');
+    <form action="./process/process_qcm.php" method="post">
 
+        <?php $qcm->generate(); ?>
 
-$qcm->addQuestion($question1);
+        <button type="submit">envoyer le questionnaire</button>
+    </form>
 
-$qcm->generate();
+</body>
+
+</html>
